@@ -56,9 +56,6 @@ class MainClass:
         #s.start()
     def Shell(self):
         s = ServerThread.ServerThread(self)
-        print(str(ErrorLog("aaa",123,"ass","aaaa")))
-        print(str(InfoLog("aaa",123,"ass","aaaa")))
-        print(str(DebugLog("aaa",123,"ass","aaaa")))
         while(True):
             Com = input(">")
             if(Com=="Listen"):

@@ -3,7 +3,7 @@ import threading
 import time
 import socket
 import select
-
+import json
 from ..Log.LogBuilder import LogBuilder
 
 class PrintLogsThread(threading.Thread):
@@ -17,9 +17,10 @@ class PrintLogsThread(threading.Thread):
             for i in self.ServerObject.ServiceConnectionList:
                 r,w,e=select.select([i],[i],[i])
                 if(r):
-                    p
-
-            print("Scan OK")
+                    try:
+                        print(str(LogBuilder.buildLogObjectFromJsonMessage(json.loads(str(i.recv(4096),"utf-8")),["",12],"TestService")))
+                    except json.decoder.JSONDecodeError as e:
+                        pass
 
             time.sleep(2)
         #send to all listeners
