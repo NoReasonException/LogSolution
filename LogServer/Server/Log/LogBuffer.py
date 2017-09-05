@@ -1,5 +1,4 @@
-
-from Server.Log.Log import *
+from LogServer.Server.Log.Log import *
 class LogBuffer:
     
     def __init__(self):

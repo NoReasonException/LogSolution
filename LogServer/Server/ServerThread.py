@@ -23,7 +23,7 @@ class ServerThread(threading.Thread):
             return
 
         self.LogObject.PrintLog(1,"Localhost",0,"LogServlet","Ready to Accept Connections...")
-        PrintLogsThread(self.LogObject).start()
+        PrintLogsThread(self).start()
         while(True):
 
             conn,info=self.SocketObject.accept()
