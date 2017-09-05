@@ -14,8 +14,12 @@ class PrintLogsThread(threading.Thread):
     def run(self):
         self.ServerObject.LogObject.PrintLog(1, "Localhost", 0, "LogServlet", "LogSender Thread Engaged")
         while(True):
-            for i in self.ServerObject.ServiceConnectionName:
-                r,w,e=select.select([i],[],[])
+            for i in self.ServerObject.ServiceConnectionList:
+                r,w,e=select.select([i],[i],[i])
+                if(r):
+                    p
+
+            print("Scan OK")
 
             time.sleep(2)
         #send to all listeners
