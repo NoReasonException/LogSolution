@@ -1,25 +1,28 @@
-from LogServer.Server.Log.Log import *
+from ..Log.Log import *
+import threading
+LogBufferLock = threading.Lock()
 class LogBuffer:
-    
-    def __init__(self):
-        self.__Buffer = list()
-
-    def submitLog(self,LogObject:Log)->None:
-        self.__Buffer.append(LogObject)
-    def getLastLog(self)->Log:
+    __Buffer = list()
+    @staticmethod
+    def submitLog(LogObject:Log)->None:
+        LogBufferLock.acquire(True)
+        LogBuffer.__Buffer.append(LogObject)
+        LogBufferLock.release()
+    @staticmethod
+    def getLastLog()->Log:
         try:
-            return self.__Buffer[-1]
+            return LogBuffer.__Buffer[-1]
         except IndexError as e:
             return None
-    def delLastLog(self)->None:
+    @staticmethod
+    def delLastLog()->None:
         try:
-            self.__Buffer.remove(-1)
+            LogBufferLock.acquire(True)
+            LogBuffer.__Buffer.remove(LogBuffer.__Buffer[-1])
+            LogBufferLock.release()
         except IndexError as e:
             return None
+    @staticmethod
+    def isBufferEmpty():
+        return len(LogBuffer.__Buffer)<1
 
-    def __iter__(self):
-        return self
-    def next(self):
-        retval=self.getLastLog()
-        self.delLastLog()
-        return retval

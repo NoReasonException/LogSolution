@@ -58,26 +58,9 @@ class MainClass:
         s = ServerThread.ServerThread(self)
         while(True):
             Com = input(">")
-            if(Com=="Listen"):
-            #if(True):
-                s.start()
-            elif(Com=="netstat"):
-                for i in s.ServiceConnectionListInfo:print(i)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            if(Com=="Listen"):s.start()
+            elif("netstat" in Com):
+                if("-s" in Com):s.netstat_s()
+                elif("-l"in Com):s.netstat_l()
 
 MainClass()
